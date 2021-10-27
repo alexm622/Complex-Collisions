@@ -21,7 +21,7 @@ $(ODIR)/%.o: %.c $(DEPS)
 collisions: $(OBJ)
 	$(CC) -o $@ $^ $(CFLAGS) $(LIBS)
 debug: CFLAGS += -DDEBUG -g
-debug: tetris
+debug: collisions
 
 .PHONY: clean
 
