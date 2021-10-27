@@ -14,7 +14,7 @@ typedef struct {
 }Polygon;
 
 bool addPointCords(Polygon* p, int x, int y);
-bool addPoint(Polygon* p, Point pt);
+bool addPoint(Polygon* p, Point *pt);
 
 bool removePointIndex(Polygon* p, int index);
 bool removePointP(Polygon* p, Point* pt);
@@ -24,13 +24,13 @@ bool removePoints(Polygon* p, int index, int count);
 Polygon * subPolygon(Polygon* p, int index_start, int index_end); 
 Polygon* combinePolygons(Polygon* p1, Polygon p2);
 
-bool freePolygon(Polygon *p);
-bool freePoint(Point *p);
-
 Polygon* newPolygon();
 Point* newPoint(int x, int y);
 
+bool freePolygon(Polygon *p);
+bool freePoint(Point *p);
 
-
+bool pointsEqual(Point *pt1, Point *pt2);
+bool shapesEqual(Polygon *p1, Polygon *p2);
 
 #endif

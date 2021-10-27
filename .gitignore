@@ -53,3 +53,7 @@ dkms.conf
 
 #executable
 collisions
+
+#ccls
+.ccls-cache/
+compile_commands.json
