@@ -99,7 +99,14 @@ bool removePoints(Polygon *p, int index, int count) {
   return true;
 }
 
-Polygon *subPolygon(Polygon *p, int index_start, int index_end) {}
+Polygon *subPolygon(Polygon *p, int index_start, int index_end) {
+  Polygon *ply = newPolygon();
+  p->numPoints = 0;
+  if (index_start > p->numPoints || index_end > p->numPoints ||
+      index_end > index_start) {
+    return ply;
+  }
+}
 Polygon *combinePolygons(Polygon *p1, Polygon p2) {}
 
 Polygon *newPolygon() {}
