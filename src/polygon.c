@@ -86,7 +86,7 @@ bool removePoints(Polygon *p, int index, int count) {
     if (i == index) {
       continue;
     }
-    if (i > index && i < index + size) {
+    if (i > index || i < index + size) {
       continue;
     }
     // shift to the left
@@ -101,15 +101,26 @@ bool removePoints(Polygon *p, int index, int count) {
 
 Polygon *subPolygon(Polygon *p, int index_start, int index_end) {
   Polygon *ply = newPolygon();
-  p->numPoints = 0;
   if (index_start > p->numPoints || index_end > p->numPoints ||
       index_end > index_start) {
     return ply;
   }
+  for (int i = 0; i < index_end - index_start; i++) {
+    addPoint(ply, p->points[index_start + i]);
+  }
+  return ply;
 }
-Polygon *combinePolygons(Polygon *p1, Polygon p2) {}
+Polygon *combinePolygons(Polygon *p1, Polygon p2) {
+  // TODO this function will be more fleshed out when collision detection is
+  // implemented so the shapes are polygons
+  return newPolygon();
+}
 
-Polygon *newPolygon() {}
+Polygon *newPolygon() {
+  Polygon *ply = calloc(1, sizeof(Polygon));
+  ply->numPoints = 0;
+  return ply;
+}
 Point *newPoint(int x, int y) {
   Point *p = malloc(sizeof(Point));
   p->x = x;
@@ -117,10 +128,38 @@ Point *newPoint(int x, int y) {
   return p;
 }
 
-bool freePolygon(Polygon *p) {}
-bool freePoint(Point *p) {}
+bool freePolygon(Polygon *p) {
+  for (int i = 0; i < p->numPoints; i++) {
+    freePoint(p->points[i]);
+  }
+  free(p);
+  return true;
+}
+bool freePoint(Point *p) {
+  free(p);
+  return true;
+}
 
 bool pointsEqual(Point *pt1, Point *pt2) {
   return (pt1->x == pt2->x) && (pt1->y == pt2->y);
 }
-bool shapesEqual(Polygon *p1, Polygon *p2);
+bool shapesEqual(Polygon *p1, Polygon *p2) {
+  if (p1->numPoints != p2->numPoints) {
+    return false;
+  }
+  for (int indexOffset = 0; indexOffset < p1->numPoints; indexOffset++) {
+    int numMatches = 0;
+    for (int i = 0; i < p1->numPoints; i++) {
+      if (pointsEqual(p1->points[i],
+                      p2->points[(i + indexOffset) % p2->numPoints])) {
+        numMatches++;
+      } else {
+        break;
+      }
+    }
+    if (numMatches == p1->numPoints) {
+      return true;
+    }
+  }
+  return false;
+}
