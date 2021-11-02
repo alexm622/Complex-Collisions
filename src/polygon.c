@@ -1,6 +1,7 @@
 #include "polygon.h"
 
 #include <stdlib.h>
+#include <string.h>
 
 bool addPointCords(Polygon *p, int x, int y) {
   Point *pt = newPoint(x, y);
@@ -162,4 +163,14 @@ bool shapesEqual(Polygon *p1, Polygon *p2) {
     }
   }
   return false;
+}
+
+Line *pointsToLine(Point *p1, Point *p2) {
+  Line *l = malloc(sizeof(Line));
+  l->p1 = malloc(sizeof(Point));
+  l->p2 = malloc(sizeof(Point));
+  l->p1 = memcpy(l->p1, p1, sizeof(Point));
+  l->p2 = memcpy(l->p2, p2, sizeof(Point));
+  l->exists = true;
+  return l;
 }

@@ -11,7 +11,7 @@ LIBS=-lm
 _DEPS = *.h
 DEPS = $(patsubst %,$(IDIR)/%,$(_DEPS))
 
-_OBJ =main.o polygon.o math.o
+_OBJ =main.o polygon.o collision.o
 OBJ = $(patsubst %,$(ODIR)/%,$(_OBJ))
 
 
